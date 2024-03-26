@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Felhasznalo {
+  id      Int      @id @default(autoincrement())
+  nev     String
+  email   String   @unique
+  telszam String   @unique
+  jelszo  String
+  utazas  Utazas[]
+  ut      Ut[]
+
+  @@map("felhasznalok")
+}
+
+model Utazas {
+  felhasznalo Felhasznalo @relation(fields: [floId], references: [id], onDelete: Cascade)
+  floId       Int
+  ut          Ut          @relation(fields: [utId], references: [id], onDelete: Cascade)
+  utId        Int
+
+  @@id(name: "id", [floId, utId])
+  @@map("utazasok")
+}
+
+model Ut {
+  id             Int              @id @default(autoincrement())
+  indulas        DateTime
+  indulasiHely   String
+  veg            DateTime
+  uticel         String
+  ar             Int
+  jarmu          String
+  tervezoId      Int
+  tervezo        Felhasznalo      @relation(fields: [tervezoId], references: [id], onDelete: Cascade)
+  utazas         Utazas[]
+  utazasiProgram UtazasiProgram[]
+
+  @@map("utak")
+}
+
+model UtazasiProgram {
+  id      Int     @id @default(autoincrement())
+  ut      Ut      @relation(fields: [utId], references: [id])
+  utId    Int
+  program Program @relation(fields: [prmId], references: [id])
+  prmId   Int
+
+  @@map("utazasiprogramok")
+}
+
+model Program {
+  id             Int              @id @default(autoincrement())
+  nev            String
+  leiras         String
+  tipus          String
+  ar             Int
+  kezdes         DateTime
+  intervallum    Float
+  kapacitas      Int
+  programvezetes Programvezetes[]
+  utazasiProgram UtazasiProgram[]
+
+  @@map("programok")
+}
+
+model Programvezetes {
+  id             Int            @id @default(autoincrement())
+  program        Program        @relation(fields: [prmId], references: [id])
+  prmId          Int
+  programfelelos Programfelelos @relation(fields: [pfsId], references: [id])
+  pfsId          Int
+
+  @@map("programvezetesek")
+}
+
+model Programfelelos {
+  id             Int              @id @default(autoincrement())
+  nev            String
+  email          String           @unique
+  telszam        String           @unique
+  programvezetes Programvezetes[]
+
+  @@map("programfelelosok")
+}
