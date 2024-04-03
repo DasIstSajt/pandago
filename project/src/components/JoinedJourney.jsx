@@ -18,6 +18,7 @@ const JoinedJourney = (journey) => {
         toast.success(data.message, {
           duration: 1000
         });
+        setView(!view);
         return;
       }
       toast.error(data.message);
