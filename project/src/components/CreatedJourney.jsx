@@ -52,7 +52,7 @@ const CreatedJourney = (journey) => {
                     <span>{journey.journey.uticel}</span>
                     <div className='flex flex-col'>
                       <span className='font-bold'>{journey.journey.veg.split("T")[0]}</span>
-                      <span className='font-bold flex justify-center'>{journey.journey.indulas.split("T")[1].slice(0, -8)}</span>
+                      <span className='font-bold flex justify-center'>{journey.journey.veg.split("T")[1].slice(0, -8)}</span>
                     </div>
                   </div>
                   <div className='flex sm:flex-col justify-between'>
