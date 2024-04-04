@@ -22,7 +22,7 @@ const protect = async(req, res, next) => {
             })
             next();
         } catch (error) {
-            res.status(401).json({message: "Problémába ütköztünk"});
+            res.status(401).json({message: "Nincs bejelentkezve!"});
             return;
         }
     }
