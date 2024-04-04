@@ -8,7 +8,6 @@ const joinJourney = async(req, res) =>{
         utId = Number(utId);
 
         if(!utId){
-            res.json({message: 'Hiányzó adatok'});
             return;
         }
 
@@ -19,7 +18,6 @@ const joinJourney = async(req, res) =>{
         })
 
         if(!ut.id){
-            res.json({message: 'Nem létező út!'});
             return;
         }
 

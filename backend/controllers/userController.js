@@ -30,9 +30,20 @@ const register = async (req, res) => {
                 email: email
             }
         });
+        
+        const tellszam = await prisma.felhasznalo.findUnique({
+            where: {
+                telszam: telszam
+            }
+        })
 
         if(user){
             res.json({message: "A megadott email cím már foglalt!"});
+            return;
+        }
+
+        if(tellszam){
+            res.json({message: "A megadott telefonszám már foglalt!"});
             return;
         }
 
